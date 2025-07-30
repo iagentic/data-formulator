@@ -16,4 +16,5 @@ litellm
 duckdb
 boto3
 pyodbc
+clickhouse-connect
 -e . #also need to install data formulator itself

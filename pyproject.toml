@@ -22,7 +22,8 @@ classifiers = [
 
 dependencies = [  
     "jupyter",  
-    "pandas",  
+    "pandas",
+    "openpyxl", 
     "docker",  
     "namedlist",  
     "matplotlib",  
@@ -36,7 +37,8 @@ dependencies = [
     "vega_datasets",
     "litellm",
     "duckdb",
-    "pyodbc"
+    "pyodbc",
+    "clickhouse-connect"
 ]
 
 [project.urls]
