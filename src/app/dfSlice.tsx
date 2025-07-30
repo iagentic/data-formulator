@@ -89,6 +89,8 @@ export interface DataFormulatorState {
     dataLoaderConnectParams: Record<string, Record<string, string>>; // {table_name: {param_name: param_value}}
     
     pendingSSEActions: SSEMessage[]; // Actions taken by the server but not yet completed
+    
+    themeMode: 'light' | 'dark';
 }
 
 // Define the initial state using that type
@@ -130,6 +132,8 @@ const initialState: DataFormulatorState = {
     dataLoaderConnectParams: {},
     
     pendingSSEActions: [],
+    
+    themeMode: 'light',
 }
 
 let getUnrefedDerivedTableIds = (state: DataFormulatorState) => {
@@ -689,6 +693,12 @@ export const dataFormulatorSlice = createSlice({
         },
         setVisViewMode: (state, action: PayloadAction<"carousel" | "gallery">) => {
             state.visViewMode = action.payload;
+        },
+        toggleThemeMode: (state) => {
+            state.themeMode = state.themeMode === 'light' ? 'dark' : 'light';
+        },
+        setThemeMode: (state, action: PayloadAction<'light' | 'dark'>) => {
+            state.themeMode = action.payload;
         },
         changeChartRunningStatus: (state, action: PayloadAction<{chartId: string, status: boolean}>) => {
             if (action.payload.status) {

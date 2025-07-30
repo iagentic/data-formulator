@@ -71,8 +71,12 @@ export const ConceptGroup: FC<{groupName: string, fields: FieldItem[]}> = functi
     const displayFields = expanded ? fields : fields.slice(0, 6);
     const hasMoreFields = fields.length > 6;
 
-    return <Box>
-        <Box sx={{display: "block", width: "100%"}}>
+    return <Box sx={{ bgcolor: 'background.default' }}>
+        <Box sx={{
+            display: "block", 
+            width: "100%",
+            bgcolor: 'background.default'
+        }}>
             <Divider orientation="horizontal" textAlign="left">
                 <Box sx={{ 
                     display: 'flex', 
@@ -168,6 +172,9 @@ export const ConceptGroup: FC<{groupName: string, fields: FieldItem[]}> = functi
                                 height: '20px',
                                 background: 'linear-gradient(to bottom, transparent, white)',
                                 pointerEvents: 'none'
+                            },
+                            '& .MuiThemeProvider-root[data-theme="dark"] &::before': {
+                                background: 'linear-gradient(to bottom, transparent, #1e1e1e)'
                             }
                         }}
                     >
@@ -191,22 +198,35 @@ export const ConceptShelf: FC<ConceptShelfProps> = function ConceptShelf() {
     let groupNames = [...new Set(conceptItemGroups.map(g => g.group))]
 
     return (
-        <Box className="concept-shelf">
-            <Box className="view-title-box" sx={{display: "flex", justifyContent: "space-between"}}>
+        <Box className="concept-shelf" sx={{ bgcolor: 'background.default' }}>
+            <Box className="view-title-box" sx={{
+                display: "flex", 
+                justifyContent: "space-between",
+                bgcolor: 'background.default'
+            }}>
                 <Typography className="view-title" component="h2" sx={{marginTop: "6px"}}>
                     Data Fields
                 </Typography>
             </Box>
-            <Box className="data-fields-group">
-                <Box className="data-fields-list">
-                    <Box sx={{display: "block", width: "100%"}}>
+            <Box className="data-fields-group" sx={{ bgcolor: 'background.default' }}>
+                <Box className="data-fields-list" sx={{ bgcolor: 'background.default' }}>
+                    <Box sx={{
+                        display: "block", 
+                        width: "100%",
+                        bgcolor: 'background.default'
+                    }}>
                         <Divider orientation="horizontal" textAlign="left">
                             <Typography component="h2" sx={{fontSize: "10px"}} color="text.secondary">
                                 field operators
                             </Typography>
                         </Divider>
                     </Box>
-                    <Box sx={{display: "flex", width: "100%", flexWrap: 'wrap'}}>
+                    <Box sx={{
+                        display: "flex", 
+                        width: "100%", 
+                        flexWrap: 'wrap',
+                        bgcolor: 'background.default'
+                    }}>
                         <OperatorCard operator="count" />
                         <OperatorCard operator="sum" />
                         <OperatorCard operator="average" />

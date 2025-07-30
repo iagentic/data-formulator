@@ -66,7 +66,9 @@ let buildChartCard = (chartElement: { tableId: string, chartId: string, element:
         sx={{
             marginLeft: 1,
             width: '100%',
-            display: 'flex'
+            display: 'flex',
+            bgcolor: 'background.paper',
+            color: 'text.primary'
         }}>
         {chartElement.element}
     </Card>
@@ -853,6 +855,7 @@ export const DataThread: FC<{}> = function ({ }) {
         flexDirection: drawerOpen ? 'row-reverse' : 'column',
         minHeight: '100%',
         transition: 'all 0.3s ease',
+        bgcolor: 'background.default',
     }}>
         {leafTables.map((lt, i) => {
             let usedIntermediateTableIds = leafTables.slice(0, i)
@@ -870,6 +873,9 @@ export const DataThread: FC<{}> = function ({ }) {
                     flex: drawerOpen ? 1 : 'none',
                     display: 'flex',
                     flexDirection: 'column',
+                    '& .MuiThemeProvider-root[data-theme="dark"] &': {
+                        backgroundColor: (i % 2 == 1 ? "rgba(255, 255, 255, 0.03)" : '#1e1e1e')
+                    },
                     height: 'calc(100% - 16px)',
                     width: '208px', 
                     transition: 'all 0.3s ease',

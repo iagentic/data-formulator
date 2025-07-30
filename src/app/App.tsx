@@ -37,6 +37,7 @@ import {
     Menu,
     MenuItem,
     TextField,
+    IconButton,
 } from '@mui/material';
 
 
@@ -45,6 +46,8 @@ import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import ClearIcon from '@mui/icons-material/Clear';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 import { DataFormulatorFC } from '../views/DataFormulator';
 
@@ -72,9 +75,9 @@ import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import { connectToSSE } from '../views/SSEClient';
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
-    color: 'black',
-    backgroundColor: "white",
-    borderBottom: "1px solid #C3C3C3",
+    color: theme.palette.mode === 'dark' ? 'white' : 'black',
+    backgroundColor: theme.palette.mode === 'dark' ? "#1e1e1e" : "white",
+    borderBottom: theme.palette.mode === 'dark' ? "1px solid #404040" : "1px solid #C3C3C3",
     boxShadow: "none",
     transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
@@ -490,6 +493,7 @@ export const AppFC: FC<AppFCProps> = function AppFC(appProps) {
 
     const visViewMode = useSelector((state: DataFormulatorState) => state.visViewMode);
     const tables = useSelector((state: DataFormulatorState) => state.tables);
+    const themeMode = useSelector((state: DataFormulatorState) => state.themeMode);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
@@ -525,8 +529,19 @@ export const AppFC: FC<AppFCProps> = function AppFC(appProps) {
         document.title = toolName;
         dispatch(fetchAvailableModels());
         dispatch(getSessionId());
+        
+        // Load theme preference from localStorage
+        const savedTheme = localStorage.getItem('dataFormulatorTheme');
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+            dispatch(dfActions.setThemeMode(savedTheme));
+        }
     }, []);
-
+    
+    // Save theme preference to localStorage when it changes
+    useEffect(() => {
+        localStorage.setItem('dataFormulatorTheme', themeMode);
+    }, [themeMode]);
+    
     let theme = createTheme({
         typography: {
             fontFamily: [
@@ -537,20 +552,29 @@ export const AppFC: FC<AppFCProps> = function AppFC(appProps) {
             ].join(",")
         },
         palette: {
+            mode: themeMode,
             primary: {
-                main: blue[700]
+                main: themeMode === 'dark' ? blue[300] : blue[700]
             },
             secondary: {
-                main: purple[700]
+                main: themeMode === 'dark' ? purple[300] : purple[700]
             },
             derived: {
-                main: yellow[700], 
+                main: themeMode === 'dark' ? yellow[300] : yellow[700], 
             },
             custom: {
-                main: orange[700], //lightsalmon
+                main: themeMode === 'dark' ? orange[300] : orange[700], //lightsalmon
             },
             warning: {
-                main: '#bf5600', // New accessible color, original (#ed6c02) has insufficient color contrast of 3.11
+                main: themeMode === 'dark' ? '#ff8a50' : '#bf5600', // Adjusted for dark mode
+            },
+            background: {
+                default: themeMode === 'dark' ? '#121212' : '#ffffff',
+                paper: themeMode === 'dark' ? '#1e1e1e' : '#ffffff',
+            },
+            text: {
+                primary: themeMode === 'dark' ? '#ffffff' : '#000000',
+                secondary: themeMode === 'dark' ? '#b0b0b0' : '#666666',
             },
         },
     });
@@ -616,6 +640,16 @@ export const AppFC: FC<AppFCProps> = function AppFC(appProps) {
                     <Divider orientation="vertical" variant="middle" flexItem />
                     <ModelSelectionButton />
                     <Divider orientation="vertical" variant="middle" flexItem />
+                    <Tooltip title={`Switch to ${themeMode === 'light' ? 'dark' : 'light'} mode`}>
+                        <IconButton
+                            onClick={() => dispatch(dfActions.toggleThemeMode())}
+                            sx={{ color: 'inherit' }}
+                            size="small"
+                        >
+                            {themeMode === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
+                        </IconButton>
+                    </Tooltip>
+                    <Divider orientation="vertical" variant="middle" flexItem />
                     <Typography sx={{ display: 'flex', fontSize: 14, alignItems: 'center', gap: 1 }}>
                         <TableMenu />
                     </Typography>
@@ -670,7 +704,9 @@ export const AppFC: FC<AppFCProps> = function AppFC(appProps) {
 
     return (
         <ThemeProvider theme={theme}>
-            {app}
+            <Box data-theme={themeMode}>
+                {app}
+            </Box>
         </ThemeProvider>
     );
 }

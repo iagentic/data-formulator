@@ -849,13 +849,30 @@ export const VisualizationViewFC: FC<VisPanelProps> = function VisualizationView
 
     // when there is no result and synthesis is running, just show the waiting panel
     if (!focusedChart || focusedChart?.chartType == "?") {
-        let chartSelectionBox = <Box sx={{display: "flex", flexDirection: "row", width: '666px', flexWrap: "wrap"}}> 
+        let chartSelectionBox = <Box sx={{
+            display: "flex", 
+            flexDirection: "row", 
+            width: '666px', 
+            flexWrap: "wrap",
+            bgcolor: 'background.default'
+        }}> 
             {Object.entries(CHART_TEMPLATES).map(([cls, templates])=>templates).flat().filter(t => t.chart != "Auto").map(t =>
                 {
                     return <Button 
                         key={`${t.chart}-btn`}
-                        sx={{margin: '2px', padding:'2px', display:'flex', flexDirection: 'column', 
-                                textTransform: 'none', justifyContent: 'flex-start'}}
+                        sx={{
+                            margin: '2px', 
+                            padding:'2px', 
+                            display:'flex', 
+                            flexDirection: 'column', 
+                            textTransform: 'none', 
+                            justifyContent: 'flex-start',
+                            bgcolor: 'background.paper',
+                            color: 'text.primary',
+                            '&:hover': {
+                                bgcolor: 'action.hover'
+                            }
+                        }}
                         onClick={() => { 
                             let focusedChart = allCharts.find(c => c.id == focusedChartId);
                             if (focusedChart?.chartType == "?") { 
@@ -868,16 +885,26 @@ export const VisualizationViewFC: FC<VisPanelProps> = function VisualizationView
                         <Icon sx={{width: 48, height: 48}} >
                             {typeof t?.icon == 'string' ? <img height="48px" width="48px" src={t?.icon} alt="" role="presentation" /> : t.icon}
                         </Icon>
-                        <Typography sx={{marginLeft: "2px", whiteSpace: "initial", fontSize: '10px', width: '64px'}} >{t?.chart}</Typography>
+                        <Typography sx={{
+                            marginLeft: "2px", 
+                            whiteSpace: "initial", 
+                            fontSize: '10px', 
+                            width: '64px',
+                            color: 'text.primary'
+                        }} >{t?.chart}</Typography>
                     </Button>
                 }
             )}
             </Box>
         return (
-            <Box sx={{  margin: "auto" }}>
+            <Box sx={{  
+                margin: "auto",
+                bgcolor: 'background.default',
+                color: 'text.primary'
+            }}>
                 {focusedTableId ? <ChartRecBox sx={{margin: 'auto'}} tableId={focusedTableId as string} placeHolderChartId={focusedChartId as string} /> : null}
                 <Divider sx={{my: 3}} textAlign='left'>
-                    <Typography sx={{fontSize: 12, color: "darkgray"}}>
+                    <Typography sx={{fontSize: 12, color: "text.secondary"}}>
                         or, select a chart type
                     </Typography>
                 </Divider>
@@ -910,9 +937,21 @@ export const VisualizationViewFC: FC<VisPanelProps> = function VisualizationView
                 return <Box key={`animateOnChange-${index}`}
                      className="vega-thumbnail-box"
                      onClick={setIndexFunc}
-                     sx={{  position: 'relative', backgroundColor: chart.saved ? "rgba(255,215,0,0.05)" : "white",
-                            border: chart.saved ? '2px solid gold' : '1px solid lightgray', margin: 1, 
-                            display: 'flex', flexDirection: 'column', maxWidth: '800px', maxHeight: '600px', overflow:'hidden'}}
+                     sx={{  
+                         position: 'relative', 
+                         backgroundColor: chart.saved ? "rgba(255,215,0,0.05)" : "white",
+                         border: chart.saved ? '2px solid gold' : '1px solid lightgray', 
+                         margin: 1, 
+                         display: 'flex', 
+                         flexDirection: 'column', 
+                         maxWidth: '800px', 
+                         maxHeight: '600px', 
+                         overflow:'hidden',
+                         '& .MuiThemeProvider-root[data-theme="dark"] &': {
+                             backgroundColor: chart.saved ? "rgba(255,215,0,0.1)" : "#1e1e1e",
+                             border: chart.saved ? '2px solid gold' : '1px solid #404040'
+                         }
+                     }}
                 >{renderTableChart(chart, conceptShelfItems, visTableRows)}</Box>
             }
 
@@ -929,16 +968,28 @@ export const VisualizationViewFC: FC<VisPanelProps> = function VisualizationView
                 <Box key={`animateOnChange-${index}`}
                      className="vega-thumbnail-box"
                      onClick={setIndexFunc}
-                     sx={{  position: 'relative', backgroundColor: chart.saved ? "rgba(255,215,0,0.05)" : "white",
-                            border: chart.saved ? '2px solid gold' : '1px solid lightgray', margin: 1, 
-                            display: 'flex', flexDirection: 'column', maxWidth: '800px', maxHeight: '600px', overflow:'hidden'}}
+                     sx={{  
+                         position: 'relative', 
+                         backgroundColor: chart.saved ? "rgba(255,215,0,0.05)" : "white",
+                         border: chart.saved ? '2px solid gold' : '1px solid lightgray', 
+                         margin: 1, 
+                         display: 'flex', 
+                         flexDirection: 'column', 
+                         maxWidth: '800px', 
+                         maxHeight: '600px', 
+                         overflow:'hidden',
+                         '& .MuiThemeProvider-root[data-theme="dark"] &': {
+                             backgroundColor: chart.saved ? "rgba(255,215,0,0.1)" : "#1e1e1e",
+                             border: chart.saved ? '2px solid gold' : '1px solid #404040'
+                         }
+                     }}
                 >
                     {/* <Box className="vega-thumbnail" id={id} key={`chart-${index}`} sx={{ margin: "auto" }}
                         onClick={setIndexFunc}></Box> */}
                     {chart.saved ? <Typography key='chart-saved-star-icon' sx={{ position: "absolute", margin: "5px", zIndex: 2, right: 0 }}>
                                         <StarIcon sx={{ color: "gold" }} fontSize="small" />
                                     </Typography> : ""}
-                    <Typography fontSize="small">data: {chart.tableRef}</Typography>
+                    <Typography fontSize="small" sx={{ color: 'text.primary' }}>data: {chart.tableRef}</Typography>
                     <Box className={"vega-thumbnail" + (focusedChartId == chart.id ? " focused-vega-thumbnail" : "")}
                         id={id} key={`chart-gallery-${index}`} sx={{ margin: "auto",  }}
                         >
@@ -951,8 +1002,8 @@ export const VisualizationViewFC: FC<VisPanelProps> = function VisualizationView
         });
 
         finalView = (
-            <Box className="visualization-gallery">
-                <Box className="vega-container" key="vega-container">
+            <Box className="visualization-gallery" sx={{ bgcolor: 'background.default' }}>
+                <Box className="vega-container" key="vega-container" sx={{ bgcolor: 'background.default' }}>
                     {chartElements}
                 </Box>
             </Box>
@@ -960,8 +1011,17 @@ export const VisualizationViewFC: FC<VisPanelProps> = function VisualizationView
     } else if (visViewMode == "carousel") {
 
         finalView = (
-            <Box sx={{ width: "100%", overflow: "hidden", display: "flex", flexDirection: "row" }}>
-                <Box className="visualization-carousel" sx={{display: "contents"}} >
+            <Box sx={{ 
+                width: "100%", 
+                overflow: "hidden", 
+                display: "flex", 
+                flexDirection: "row",
+                bgcolor: 'background.default'
+            }}>
+                <Box className="visualization-carousel" sx={{
+                    display: "contents",
+                    bgcolor: 'background.default'
+                }} >
                     {chartEditor}
                 </Box>
             </Box>

@@ -110,13 +110,26 @@ export const DataFormulatorFC = ({ }) => {
     }, []);
 
     let conceptEncodingPanel = (
-        <Box sx={{display: "flex", flexDirection: "row", width: '100%', flexGrow: 1, overflow: "hidden"}}>
+        <Box sx={{
+            display: "flex", 
+            flexDirection: "row", 
+            width: '100%', 
+            flexGrow: 1, 
+            overflow: "hidden",
+            bgcolor: 'background.default'
+        }}>
             <ConceptShelf />
         </Box>
     )
 
     const visPaneMain = (
-        <Box sx={{ width: "100%", overflow: "hidden", display: "flex", flexDirection: "row" }}>
+        <Box sx={{ 
+            width: "100%", 
+            overflow: "hidden", 
+            display: "flex", 
+            flexDirection: "row",
+            bgcolor: 'background.default'
+        }}>
             <VisualizationViewFC />
         </Box>);
 
@@ -143,7 +156,12 @@ export const DataFormulatorFC = ({ }) => {
             size={displayPanelSize}
             style={{width: "100%", height: '100%', position: 'relative'}}
             onDragFinished={size => { dispatch(dfActions.setDisplayPanelSize(size)) }}>
-            <Box sx={{display: 'flex', width: `100%`, height: '100%'}}>
+            <Box sx={{
+                display: 'flex', 
+                width: `100%`, 
+                height: '100%',
+                bgcolor: 'background.default'
+            }}>
                 {tables.length > 0 ? 
                         <DataThread />   //<Carousel />
                         : ""} 
@@ -156,14 +174,30 @@ export const DataFormulatorFC = ({ }) => {
         </SplitPane>);
 
     const fixedSplitPane = ( 
-        <Box sx={{display: 'flex', flexDirection: 'row', height: '100%'}}>
-            <Box sx={{display: 'flex', width: `calc(100% - ${280}px)`}}>
+        <Box sx={{
+            display: 'flex', 
+            flexDirection: 'row', 
+            height: '100%',
+            bgcolor: 'background.default'
+        }}>
+            <Box sx={{
+                display: 'flex', 
+                width: `calc(100% - ${280}px)`,
+                bgcolor: 'background.default'
+            }}>
             {tables.length > 0 ? 
                     <DataThread />   //<Carousel />
                     : ""} 
                 {visPane}
             </Box>
-            <Box className="data-editor" sx={{width: 280, borderLeft: '1px solid lightgray'}}>
+            <Box className="data-editor" sx={{
+                width: 280, 
+                borderLeft: '1px solid lightgray',
+                bgcolor: 'background.default',
+                '& .MuiThemeProvider-root[data-theme="dark"] &': {
+                    borderLeft: '1px solid #404040'
+                }
+            }}>
                 {conceptEncodingPanel}
                 {/* <InfoPanelFC $tableRef={$tableRef}/> */}
             </Box>
@@ -180,8 +214,18 @@ export const DataFormulatorFC = ({ }) => {
 Totals (7 entries)	5	5	5	15
 `
 
-    let dataUploadRequestBox = <Box sx={{width: '100vw'}}>
-        <Box sx={{paddingTop: "8%", display: "flex", flexDirection: "column", textAlign: "center"}}>
+    let dataUploadRequestBox = <Box sx={{
+        width: '100vw',
+        bgcolor: 'background.default',
+        color: 'text.primary'
+    }}>
+        <Box sx={{
+            paddingTop: "8%", 
+            display: "flex", 
+            flexDirection: "column", 
+            textAlign: "center",
+            bgcolor: 'background.default'
+        }}>
             <Box component="img" sx={{  width: 256, margin: "auto" }} alt="" src={dfLogo} />
             <Typography variant="h3" sx={{marginTop: "20px"}}>
                 {toolName}
@@ -203,8 +247,18 @@ Totals (7 entries)	5	5	5	15
                 href="https://privacy.microsoft.com/en-US/data-privacy-notice">view data privacy notice</Button>
     </Box>;
 
-    let modelSelectionDialogBox = <Box sx={{width: '100vw'}}>
-        <Box sx={{paddingTop: "8%", display: "flex", flexDirection: "column", textAlign: "center"}}>
+    let modelSelectionDialogBox = <Box sx={{
+        width: '100vw',
+        bgcolor: 'background.default',
+        color: 'text.primary'
+    }}>
+        <Box sx={{
+            paddingTop: "8%", 
+            display: "flex", 
+            flexDirection: "column", 
+            textAlign: "center",
+            bgcolor: 'background.default'
+        }}>
             <Box component="img" sx={{  width: 256, margin: "auto" }} alt="" src={dfLogo} />
             <Typography variant="h3" sx={{marginTop: "20px"}}>
                 {toolName}
@@ -221,7 +275,12 @@ Totals (7 entries)	5	5	5	15
     </Box>;
 
     return (
-        <Box sx={{ display: 'block', width: "100%", height: 'calc(100% - 49px)' }}>
+        <Box sx={{ 
+            display: 'block', 
+            width: "100%", 
+            height: 'calc(100% - 49px)',
+            bgcolor: 'background.default'
+        }}>
             <DndProvider backend={HTML5Backend}>
                 {!noBrokenModelSlots ? modelSelectionDialogBox : (tables.length > 0 ? fixedSplitPane : dataUploadRequestBox)} 
             </DndProvider>

@@ -86,6 +86,7 @@ const NLTableSelector: FC<{
             gap: '2px',
             padding: '4px',
             marginBottom: 0.5,
+            bgcolor: 'background.default'
         }}>
             {selectedTableIds.map((tableId) => {
                 const isRequired = requiredTableIds.includes(tableId);
@@ -452,11 +453,18 @@ export const ChartRecBox: FC<ChartRecBoxProps> = function ({ tableId, placeHolde
             maxWidth: "600px", 
             display: 'flex', 
             flexDirection: 'column',
-            gap: 1
+            gap: 1,
+            bgcolor: 'background.paper',
+            color: 'text.primary'
         }}>
             {showTableSelector && (
                 <Box>
-                    <Typography sx={{ fontSize: 12, color: "text.secondary", marginBottom: 0.5 }}>
+                    <Typography sx={{ 
+                        fontSize: 12, 
+                        color: "text.secondary", 
+                        marginBottom: 0.5,
+                        bgcolor: 'background.default'
+                    }}>
                         Select additional tables:
                     </Typography>
                     <NLTableSelector
@@ -472,8 +480,17 @@ export const ChartRecBox: FC<ChartRecBoxProps> = function ({ tableId, placeHolde
                 <TextField
                     sx={{
                         flex: 1,
-                        "& .MuiInputLabel-root": { fontSize: '14px' },
-                        "& .MuiInput-input": { fontSize: '14px' }
+                        "& .MuiInput-input": { fontSize: '14px' },
+                        "& .MuiInput-root": { 
+                            color: 'text.primary',
+                            '&:before': { borderBottomColor: 'divider' },
+                            '&:after': { borderBottomColor: 'primary.main' }
+                        },
+                        "& .MuiInputLabel-root": { 
+                            fontSize: '14px',
+                            color: 'text.secondary',
+                            '&.Mui-focused': { color: 'primary.main' }
+                        }
                     }}
                     onChange={(event) => setPrompt(event.target.value)}
                     onKeyDown={handleKeyDown}
@@ -504,8 +521,21 @@ export const ChartRecBox: FC<ChartRecBoxProps> = function ({ tableId, placeHolde
                     minRows={1}
                 />
                 <Divider orientation="vertical" flexItem />
-                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 0.5, my: 1}}>
-                    <Typography sx={{ fontSize: 10, color: "text.secondary", marginBottom: 0.5 }}>
+                <Box sx={{
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    flexDirection: 'column', 
+                    gap: 0.5, 
+                    my: 1,
+                    bgcolor: 'background.default'
+                }}>
+                    <Typography sx={{ 
+                        fontSize: 10, 
+                        color: "text.secondary", 
+                        marginBottom: 0.5,
+                        bgcolor: 'background.default'
+                    }}>
                         surprise?
                     </Typography>
                     <Tooltip title="Generate some chart that might surprise you">   
