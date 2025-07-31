@@ -23,6 +23,8 @@ classifiers = [
 dependencies = [  
     "jupyter",  
     "pandas",
+    "av --only-binary :all:",
+    "semantic-kernel",
     "openpyxl", 
     "docker",  
     "namedlist",  

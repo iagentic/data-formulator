@@ -17,4 +17,6 @@ duckdb
 boto3
 pyodbc
 clickhouse-connect
+av --only-binary :all:
+semantic-kernel
 -e . #also need to install data formulator itself
